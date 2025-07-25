@@ -57,7 +57,7 @@ jobs:
         # continue-on-error: true
         #   DISPLAY: ':99'
         # run: xvfb-run --auto-servernum -- node --trace-warnings index.js
-        run: xvfb-run --auto-servernum -- node --trace-warnings free.js
+        run: xvfb-run --auto-servernum -- node --trace-warnings free-v2.js
         
       - name: Fazer upload da captura de tela
         if: success() || failure()
