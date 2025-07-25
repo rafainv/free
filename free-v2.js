@@ -95,6 +95,8 @@ const free = async () => {
         })
         await new Promise(r => setTimeout(r, 1000));
     }
+    await new Promise((r) => setTimeout(r, 5000));
+    await page.screenshot({ path: "screen.png" });
     await browser.close()
     assert.strictEqual(token !== null, true, "Cloudflare turnstile test failed!")
 
