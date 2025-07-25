@@ -82,17 +82,26 @@ const free = async () => {
       window.scrollTo(0, document.body.scrollHeight);
     });
 
+    let token = null
+    let startDate = Date.now()
+    while (!token && (Date.now() - startDate) < 30000) {
+        token = await page.evaluate(() => {
+            try {
+                let item = document.querySelector('[name="cf-turnstile-response"]').value
+                return item && item.length > 20 ? item : null
+            } catch (e) {
+                return null
+            }
+        })
+        await new Promise(r => setTimeout(r, 1000));
+    }
+    await browser.close()
+    assert.strictEqual(token !== null, true, "Cloudflare turnstile test failed!")
+
     await new Promise((r) => setTimeout(r, 5000));
 
     // roll
     try {
-      // const token = await page.waitForFunction(() => {
-      //   const inputElement = document.querySelector(
-      //     'input[name="cf-turnstile-response"]'
-      //   );
-      //   return inputElement && inputElement.value ? inputElement.value : null;
-      // });
-      // await new Promise((r) => setTimeout(r, 5000));
       await page.waitForFunction(() => {
         const el = document.querySelector("#free_play_form_button");
         if (!el) return null;
