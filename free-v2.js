@@ -84,6 +84,8 @@ const free = async () => {
 
     await new Promise((r) => setTimeout(r, 5000));
 
+    await page.screenshot({ path: "screen.png" });
+
     // roll
     try {
       // const token = await page.waitForFunction(() => {
@@ -105,11 +107,11 @@ const free = async () => {
       console.log("Botão ainda não está visível.");
     }
     await new Promise((r) => setTimeout(r, 5000));
-    await page.screenshot({ path: "screen.png" });
+    //await page.screenshot({ path: "screen.png" });
   } catch (error) {
     console.error(`Erro interno do servidor: ${error.message}`);
   } finally {
-    // await browser.close();
+    await browser.close();
   }
 };
 
