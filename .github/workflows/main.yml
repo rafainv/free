@@ -1,0 +1,67 @@
+name: Nodejs
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  # schedule:
+  #   - cron: "0 * * * *" # Executa a cada X horas
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalar dependências do sistema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            wget \
+            gnupg \
+            ca-certificates \
+            apt-transport-https \
+            xvfb \
+            && sudo rm -rf /var/lib/apt/lists/*
+
+      - name: Instalar Google Chrome
+        run: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - \
+          && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google.list \
+          && sudo apt-get update \
+          && sudo apt-get install -y google-chrome-stable \
+          && sudo rm -rf /var/lib/apt/lists/*
+
+      - name: Instalar dependências do Node.js
+        run: npm update && npm install
+
+      - name: Executar node index.js
+        # env:
+        #   IP_PROXY: ${{ secrets.IP_PROXY }}
+        #   PORT_PROXY: ${{ secrets.PORT_PROXY }}
+        #   USER_PROXY: ${{ secrets.USER_PROXY }}
+        #   PASS_PROXY: ${{ secrets.PASS_PROXY }}
+        #   LOGIN_GOOGLE: ${{ secrets.LOGIN_GOOGLE }}
+        #   PASSWORD_GOOGLE: ${{ secrets.PASSWORD_GOOGLE }}
+        #   COIN: ${{ secrets.COIN }}
+        #   RUN: ${{ secrets.RUN }}
+        # timeout-minutes: 1
+        # continue-on-error: true
+        #   DISPLAY: ':99'
+        # run: xvfb-run --auto-servernum -- node --trace-warnings index.js
+        run: xvfb-run --auto-servernum -- node --trace-warnings free.js
+        
+      - name: Fazer upload da captura de tela
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot
+          path: screen.png
