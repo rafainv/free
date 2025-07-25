@@ -84,8 +84,6 @@ const free = async () => {
 
     await new Promise((r) => setTimeout(r, 5000));
 
-    await page.screenshot({ path: "screen.png" });
-
     // roll
     try {
       // const token = await page.waitForFunction(() => {
@@ -103,8 +101,12 @@ const free = async () => {
       await new Promise((r) => setTimeout(r, 5000));
       await page.waitForSelector("#free_play_form_button", { visible: true });
       await page.click("#free_play_form_button", { visible: true });
+      await new Promise((r) => setTimeout(r, 5000));
+      await page.screenshot({ path: "screen.png" });
     } catch (e) {
-      console.log("Botão ainda não está visível.");
+      await new Promise((r) => setTimeout(r, 5000));
+      await page.screenshot({ path: "screen.png" });
+      await browser.close();
     }
     await new Promise((r) => setTimeout(r, 5000));
     //await page.screenshot({ path: "screen.png" });
