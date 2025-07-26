@@ -95,10 +95,10 @@ const free = async () => {
         })
         await new Promise(r => setTimeout(r, 1000));
     }
-    await new Promise((r) => setTimeout(r, 5000));
+    await new Promise((r) => setTimeout(r, 20000));
     await page.screenshot({ path: "screen.png" });
     // await browser.close()
-    // await new Promise((r) => setTimeout(r, 5000));
+    await new Promise((r) => setTimeout(r, 10000));
 
     // roll
     // try {
