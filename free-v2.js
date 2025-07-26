@@ -101,22 +101,22 @@ const free = async () => {
     // await new Promise((r) => setTimeout(r, 5000));
 
     // roll
-    try {
-      await page.waitForFunction(() => {
-        const el = document.querySelector("#free_play_form_button");
-        if (!el) return null;
-        return el.style.display !== "none";
-      });
-      await new Promise((r) => setTimeout(r, 5000));
-      await page.waitForSelector("#free_play_form_button", { visible: true });
-      await page.click("#free_play_form_button", { visible: true });
-      await new Promise((r) => setTimeout(r, 5000));
-      await page.screenshot({ path: "screen.png" });
-    } catch (e) {
-      await new Promise((r) => setTimeout(r, 5000));
-      await page.screenshot({ path: "screen.png" });
-      await browser.close();
-    }
+    // try {
+    //   await page.waitForFunction(() => {
+    //     const el = document.querySelector("#free_play_form_button");
+    //     if (!el) return null;
+    //     return el.style.display !== "none";
+    //   });
+    //   await new Promise((r) => setTimeout(r, 5000));
+    //   await page.waitForSelector("#free_play_form_button", { visible: true });
+    //   await page.click("#free_play_form_button", { visible: true });
+    //   await new Promise((r) => setTimeout(r, 5000));
+    //   await page.screenshot({ path: "screen.png" });
+    // } catch (e) {
+    //   await new Promise((r) => setTimeout(r, 5000));
+    //   await page.screenshot({ path: "screen.png" });
+    //   await browser.close();
+    // }
     await new Promise((r) => setTimeout(r, 5000));
     //await page.screenshot({ path: "screen.png" });
   } catch (error) {
