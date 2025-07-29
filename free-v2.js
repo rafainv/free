@@ -95,7 +95,15 @@ const free = async () => {
         })
         await new Promise(r => setTimeout(r, 1000));
     }
+    const turnstileToken = await page.waitForFunction(() => {
+  const el = document.querySelector('input[name="cf-turnstile-response"]');
+  return el && el.value ? el.value : null;
+});
+
+console.log("Token:", await turnstileToken.jsonValue());
+
     await new Promise((r) => setTimeout(r, 60000));
+    
     await page.screenshot({ path: "screen.png" });
     // await browser.close()
     await new Promise((r) => setTimeout(r, 10000));
