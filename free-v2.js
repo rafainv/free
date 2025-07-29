@@ -24,7 +24,7 @@ const free = async () => {
     args: ["--start-maximized"],
     turnstile: true,
     headless: false,
-    // disableXvfb: true,
+    disableXvfb: true,
     customConfig: {},
     connectOption: {
       defaultViewport: null,
@@ -95,9 +95,6 @@ const free = async () => {
         })
         await new Promise(r => setTimeout(r, 1000));
     }
-    const turnstileToken = await page.waitForFunction(() => {
-  const el = document.querySelector('input[name="cf-turnstile-response"]');
-  return el && el.value ? el.value : null;
 });
 
 console.log("Token:", await turnstileToken.jsonValue());
