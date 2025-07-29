@@ -24,7 +24,7 @@ const free = async () => {
     args: ["--start-maximized"],
     turnstile: true,
     headless: false,
-    disableXvfb: false,
+    // disableXvfb: false,
     customConfig: {},
     connectOption: {
       defaultViewport: null,
