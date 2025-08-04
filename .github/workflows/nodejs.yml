@@ -45,20 +45,7 @@ jobs:
         run: npm update && npm install
 
       - name: Executar node index.js
-        # env:
-        #   IP_PROXY: ${{ secrets.IP_PROXY }}
-        #   PORT_PROXY: ${{ secrets.PORT_PROXY }}
-        #   USER_PROXY: ${{ secrets.USER_PROXY }}
-        #   PASS_PROXY: ${{ secrets.PASS_PROXY }}
-        #   LOGIN_GOOGLE: ${{ secrets.LOGIN_GOOGLE }}
-        #   PASSWORD_GOOGLE: ${{ secrets.PASSWORD_GOOGLE }}
-        #   COIN: ${{ secrets.COIN }}
-        #   RUN: ${{ secrets.RUN }}
-        # timeout-minutes: 1
-        # continue-on-error: true
-        #   DISPLAY: ':99'
-        # run: xvfb-run --auto-servernum -- node --trace-warnings index.js
-        run: xvfb-run --auto-servernum -- node --trace-warnings free-v2.js
+        run: xvfb-run --auto-servernum -- node --trace-warnings free.js
         
       - name: Fazer upload da captura de tela
         if: success() || failure()
