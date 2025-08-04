@@ -58,7 +58,7 @@ const free = async () => {
       fs.writeFileSync(COOKIES_PATH, JSON.stringify(cookies, null, 2));
       console.log("Cookies salvos!");
     } else {
-      console.log("Já está logado com cookies!");
+      console.log("Já está logado.");
     }
 
     await page.evaluate(() => {
