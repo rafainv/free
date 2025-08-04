@@ -56,7 +56,7 @@ const free = async () => {
       waitUntil: "networkidle2",
     });
 
-    await new Promise((r) => setTimeout(r, 5000)); 
+    await new Promise((r) => setTimeout(r, 5000));
 
     if ((await page.content()).includes("LOGIN")) {
       await new Promise((r) => setTimeout(r, 5000));
@@ -84,22 +84,37 @@ const free = async () => {
 
     await new Promise((r) => setTimeout(r, 8000));
 
-    await page.click("#freeplay_form_cf_turnstile");
+    let token = null;
+    let startDate = Date.now();
+    while (!token && Date.now() - startDate < 30000) {
+      await page.click("#freeplay_form_cf_turnstile");
+      token = await page.evaluate(() => {
+        try {
+          let item = document.querySelector(
+            '[name="cf-turnstile-response"]'
+          ).value;
+          return item && item.length > 20 ? item : null;
+        } catch (e) {
+          return null;
+        }
+      });
+      await new Promise((r) => setTimeout(r, 1000));
+    }
 
     // roll
     // try {
-      // const token = await page.waitForFunction(() => {
-      //   const inputElement = document.querySelector(
-      //     'input[name="cf-turnstile-response"]'
-      //   );
-      //   return inputElement && inputElement.value ? inputElement.value : null;
-      // });
-      // await new Promise((r) => setTimeout(r, 5000));
-      // await page.waitForFunction(() => {
-      //   const el = document.querySelector("#free_play_form_button");
-      //   if (!el) return null;
-      //   return el.style.display !== "none";
-      // });
+    // const token = await page.waitForFunction(() => {
+    //   const inputElement = document.querySelector(
+    //     'input[name="cf-turnstile-response"]'
+    //   );
+    //   return inputElement && inputElement.value ? inputElement.value : null;
+    // });
+    // await new Promise((r) => setTimeout(r, 5000));
+    // await page.waitForFunction(() => {
+    //   const el = document.querySelector("#free_play_form_button");
+    //   if (!el) return null;
+    //   return el.style.display !== "none";
+    // });
     //   await new Promise((r) => setTimeout(r, 5000));
     //   await page.waitForSelector("#free_play_form_button", { visible: true });
     //   await page.click("#free_play_form_button", { visible: true });
@@ -116,6 +131,7 @@ const free = async () => {
 };
 
 free();
+
 
 
 // const { connect } = require("puppeteer-real-browser");
@@ -144,7 +160,7 @@ free();
 //     args: ["--start-maximized"],
 //     turnstile: true,
 //     headless: false,
-//     // disableXvfb: false,
+//     // disableXvfb: true,
 //     customConfig: {},
 //     connectOption: {
 //       defaultViewport: null,
@@ -176,7 +192,7 @@ free();
 //       waitUntil: "networkidle2",
 //     });
 
-//     await new Promise((r) => setTimeout(r, 2000)); 
+//     await new Promise((r) => setTimeout(r, 5000)); 
 
 //     if ((await page.content()).includes("LOGIN")) {
 //       await new Promise((r) => setTimeout(r, 5000));
@@ -202,48 +218,32 @@ free();
 //       window.scrollTo(0, document.body.scrollHeight);
 //     });
 
-//     let token = null
-//     let startDate = Date.now()
-//     while (!token && (Date.now() - startDate) < 30000) {
-//         token = await page.evaluate(() => {
-//             try {
-//                 let item = document.querySelector('[name="cf-turnstile-response"]').value
-//                 return item && item.length > 20 ? item : null
-//             } catch (e) {
-//                 return null
-//             }
-//         })
-//         await new Promise(r => setTimeout(r, 1000));
-//     }
-// });
+//     await new Promise((r) => setTimeout(r, 8000));
 
-// console.log("Token:", await turnstileToken.jsonValue());
-
-//     await new Promise((r) => setTimeout(r, 60000));
-    
-//     await page.screenshot({ path: "screen.png" });
-//     // await browser.close()
-//     await new Promise((r) => setTimeout(r, 10000));
+//     await page.click("#freeplay_form_cf_turnstile");
 
 //     // roll
 //     // try {
-//     //   await page.waitForFunction(() => {
-//     //     const el = document.querySelector("#free_play_form_button");
-//     //     if (!el) return null;
-//     //     return el.style.display !== "none";
-//     //   });
+//       // const token = await page.waitForFunction(() => {
+//       //   const inputElement = document.querySelector(
+//       //     'input[name="cf-turnstile-response"]'
+//       //   );
+//       //   return inputElement && inputElement.value ? inputElement.value : null;
+//       // });
+//       // await new Promise((r) => setTimeout(r, 5000));
+//       // await page.waitForFunction(() => {
+//       //   const el = document.querySelector("#free_play_form_button");
+//       //   if (!el) return null;
+//       //   return el.style.display !== "none";
+//       // });
 //     //   await new Promise((r) => setTimeout(r, 5000));
 //     //   await page.waitForSelector("#free_play_form_button", { visible: true });
 //     //   await page.click("#free_play_form_button", { visible: true });
-//     //   await new Promise((r) => setTimeout(r, 5000));
-//     //   await page.screenshot({ path: "screen.png" });
 //     // } catch (e) {
-//     //   await new Promise((r) => setTimeout(r, 5000));
-//     //   await page.screenshot({ path: "screen.png" });
-//     //   await browser.close();
+//     //   console.log("Botão ainda não está visível.");
 //     // }
-//     await new Promise((r) => setTimeout(r, 5000));
-//     //await page.screenshot({ path: "screen.png" });
+//     await new Promise((r) => setTimeout(r, 8000));
+//     await page.screenshot({ path: "screen.png" });
 //   } catch (error) {
 //     console.error(`Erro interno do servidor: ${error.message}`);
 //   } finally {
