@@ -111,7 +111,7 @@ const free = async () => {
   } catch (error) {
     console.error(`Erro interno do servidor: ${error.message}`);
   } finally {
-    // await browser.close();
+    await browser.close();
   }
 };
 
