@@ -40,7 +40,7 @@ const free = async () => {
       waitUntil: "networkidle2",
     });
 
-    await new Promise((r) => setTimeout(r, 5000));
+    await new Promise((r) => setTimeout(r, 10000));
 
     if ((await page.content()).includes("LOGIN")) {
       await new Promise((r) => setTimeout(r, 5000));
@@ -66,7 +66,7 @@ const free = async () => {
       window.scrollTo(0, document.body.scrollHeight);
     });
 
-    await new Promise((r) => setTimeout(r, 8000));
+    await new Promise((r) => setTimeout(r, 10000));
 
     let token = null;
     let startDate = Date.now();
