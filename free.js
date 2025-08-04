@@ -71,18 +71,25 @@ const free = async () => {
     let token = null;
     let startDate = Date.now();
     while (!token && Date.now() - startDate < 30000) {
-      await page.click("#freeplay_form_cf_turnstile");
-      token = await page.evaluate(() => {
-        try {
-          let item = document.querySelector(
-            '[name="cf-turnstile-response"]'
-          ).value;
-          return item && item.length > 20 ? item : null;
-        } catch (e) {
-          return null;
-        }
-      });
-      await new Promise((r) => setTimeout(r, 1000));
+      try {
+        await page.waitForSelector("#freeplay_form_cf_turnstile", {
+          visible: true,
+        });
+        await page.click("#freeplay_form_cf_turnstile");
+        token = await page.evaluate(() => {
+          try {
+            const input = document.querySelector(
+              '[name="cf-turnstile-response"]'
+            );
+            return input && input.value.length > 20 ? input.value : null;
+          } catch (e) {
+            return null;
+          }
+        });
+        await new Promise((r) => setTimeout(r, 1000));
+      } catch (err) {
+        console.log("Erro ao tentar resolver Turnstile:", err);
+      }
     }
 
     await new Promise((r) => setTimeout(r, 5000));
