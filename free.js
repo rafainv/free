@@ -99,7 +99,7 @@ const free = async () => {
     } catch (e) {
       console.log("Botão ainda não está visível.");
     }
-    await new Promise((r) => setTimeout(r, 5000));
+    await new Promise((r) => setTimeout(r, 10000));
     await page.screenshot({ path: "screen.png" });
   } catch (error) {
     await page.screenshot({ path: "screen.png" });
