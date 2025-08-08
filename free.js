@@ -104,6 +104,8 @@ const free = async () => {
   } catch (error) {
     await page.screenshot({ path: "screen.png" });
     console.error(`Erro interno do servidor: ${error.message}`);
+    await new Promise((r) => setTimeout(r, 5000));
+    await free();
   } finally {
     await browser.close();
   }
