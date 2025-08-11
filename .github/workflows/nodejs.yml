@@ -62,6 +62,11 @@ jobs:
       - name: Instalar dependências do Node.js
         run: npm update && npm install
 
+      - name: Criar cookies.json a partir do Secret
+        env:
+          COOKIES: ${{ secrets.COOKIES }}
+        run: echo "$COOKIES" > cookies.json
+
       - name: Executar node index.js
         run: xvfb-run --auto-servernum -- node --trace-warnings free.js
 
