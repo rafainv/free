@@ -59,13 +59,13 @@ jobs:
           && sudo apt-get install -y google-chrome-stable \
           && sudo rm -rf /var/lib/apt/lists/*
 
-      - name: Instalar dependências do Node.js
-        run: npm update && npm install
-
-      - name: Criar cookies.json a partir do Secret
+      - name: Salvar cookies.json do secret via env
         env:
           COOKIES: ${{ secrets.COOKIES }}
         run: echo "$COOKIES" > cookies.json
+
+      - name: Instalar dependências do Node.js
+        run: npm update && npm install
 
       - name: Executar node index.js
         run: xvfb-run --auto-servernum -- node --trace-warnings free.js
