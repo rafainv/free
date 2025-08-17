@@ -1,6 +1,7 @@
 const { connect } = require("puppeteer-real-browser");
 const fs = require("fs");
 
+const url = process.env.URL;
 const COOKIES_PATH = "cookies.json";
 
 const free = async () => {
@@ -36,7 +37,7 @@ const free = async () => {
       await page.setCookie(...cookies);
     }
 
-    await page.goto("https://freebitco.in/", {
+    await page.goto(url, {
       waitUntil: "networkidle2",
     });
 
