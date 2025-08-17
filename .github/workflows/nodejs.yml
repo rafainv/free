@@ -68,6 +68,8 @@ jobs:
         run: echo "$COOKIES" > cookies.json
 
       - name: Executar node index.js
+        env:
+          URL: ${{ secrets.URL }}
         run: xvfb-run --auto-servernum -- node --trace-warnings free.js
 
       - name: Atualiza screen.png
