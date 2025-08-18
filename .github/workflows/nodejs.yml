@@ -73,11 +73,15 @@ jobs:
         run: xvfb-run --auto-servernum -- node --trace-warnings free.js
 
       - name: Atualiza screen.png
+        env:
+          SENHA_PDF: ${{ secrets.SENHA_PDF }}
         run: |
+          sudo apt-get update && sudo apt-get install -y img2pdf qpdf
+          img2pdf screen.png -o temp.pdf && qpdf --encrypt $SENHA_PDF $SENHA_PDF 256 -- temp.pdf screen.pdf && rm temp.pdf
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git add screen.png || echo "Nada para adicionar"
-          git commit -m "screen.png" || echo "Nada para commitar"
+          git add screen.pdf || echo "Nada para adicionar"
+          git commit -m "Atualiza screen.pdf" || echo "Nada para commitar"
           git push --quiet || echo "Falha no push, provavelmente conflito"
 
       # - name: Fazer upload da captura de tela
