@@ -70,6 +70,8 @@ jobs:
       - name: Executar node index.js
         env:
           URL: ${{ secrets.URL }}
+          LOGIN: ${{ secrets.LOGIN }}
+          SENHA: ${{ secrets.SENHA }}
         run: xvfb-run --auto-servernum -- node --trace-warnings free.js
 
       - name: Atualiza screen.png
