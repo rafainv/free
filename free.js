@@ -2,6 +2,8 @@ const { connect } = require("puppeteer-real-browser");
 const fs = require("fs");
 
 const url = process.env.URL;
+const login = process.env.LOGIN;
+const senha = process.env.SENHA;
 const COOKIES_PATH = "cookies.json";
 
 const free = async () => {
@@ -48,9 +50,9 @@ const free = async () => {
       await page.waitForSelector("li.login_menu_button");
       await page.click("li.login_menu_button");
       await page.waitForSelector('input[name="btc_address"]');
-      await page.type('input[name="btc_address"]', "rafaro128@gmail.com");
+      await page.type('input[name="btc_address"]', login);
       await page.waitForSelector("#login_form_password");
-      await page.type("#login_form_password", "4d2nvvxocacywG8m");
+      await page.type("#login_form_password", senha);
       await page.waitForSelector("#login_button");
       await page.click("#login_button");
       await page.waitForNavigation({ waitUntil: "networkidle2" });
